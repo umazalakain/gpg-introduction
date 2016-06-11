@@ -1,7 +1,22 @@
 \documentclass{beamer}
+\usetheme{Montpellier}
+\usecolortheme{orchid}
+\definecolor{UniGray}{RGB}{93,93,93}
+\setbeamercolor{title}{fg=UniGray}
+\setbeamercolor{frametitle}{fg=UniGray}
+\setbeamercolor{structure}{fg=UniGray}
 
-\title{Introducción a GPG}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+
+\let\olditem\item
+\renewcommand{\item}{%
+\olditem\vspace{3pt}}
+
+\title{GnuPG}
+\subtitle{Introducción}
 \author{Unai Zalakain}
+\date{Jornadas de Tecnología y Cultura Libre,\\ Junio 2016}
 
 
 \begin{document}
@@ -15,53 +30,96 @@
 
 
 \section{Qué es}
-
-
-- software de cifrado
-
-- software libre
-
-- permite cifrar (confidencialidad)
-
-- permite firmar (autenticación e integridad)
-
-- permite crear redes de confianza
-
-- interfaz de línea de comandos
-
-- multitud de interfaces gráficas
-
-- integración con clientes de correo
-
-- integración con gestores de contraseñas
+\begin{frame}
+\frametitle{Qué es}
+\begin{itemize}
+    \item software criptográfico
+    \item software libre
+    \item permite cifrar [confidencialidad]
+    \item permite firmar [autenticación, integridad, no repudio]
+    \item permite crear redes de confianza
+    \item interfaz de línea de comandos
+    \item multitud de interfaces gráficas
+    \item integración con clientes de correo
+    \item integración con gestores de contraseñas
+\end{itemize}
+\end{frame}
 
 
 \section{Tipos de cifrado}
+\subsection{Cifrado simétrico}
+\begin{frame}
+\frametitle{Cifrado simétrico}
+\begin{itemize}
+    \item texto plano {\tiny $\leftarrow$clave$\rightarrow$} texto cifrado
+    \item quien puede cifrar, puede descifrar
+    \item todas las partes necesitan conocer la clave común
+\end{itemize}
+\end{frame}
+
+\subsection{Cifrado asimétrico}
+\begin{frame}
+\frametitle{Cifrado asimétrico}
+\begin{itemize}
+    \item texto plano {\tiny ---clave pública destinatario$\rightarrow$} texto
+        cifrado
+    \item texto cifrado {\tiny ---clave privada destinatario$\rightarrow$} texto
+        plano
+    \item cualquiera que posea la clave pública puede cifrar
+    \item solo quien posea la clave privada puede descifrar
+    \item se puede cifrar para múltiples claves privadas
+\end{itemize}
+\end{frame}
 
 
-- cifrado simétrico
-    - texto plano *<--- clave --->* texto cifrado
-    - quien puede cifrar, puede descifrar
-    - todas las partes necesitan conocer la clave
-
-- cifrado asimétrico
-    - texto plano *--- clave pública destinatario --->* texto cifrado
-    - texto cifrado *--- clave privada destinatario --->* texto plano
-    - cualquiera que posea la clave pública puede cifrar
-    - solo quien posea la clave privada puede descifrar
-    - computacionalmente costoso
-
-
-\section{(Des)cifrado}
+\section{Firmas digitales}
+\begin{frame}
+\frametitle{Firmas digitales}
+\begin{itemize}
+    \item texto plano {\tiny ---clave privada emisor$\rightarrow$} texto firmado
+    \item texto firmado {\tiny ---clave pública emisor$\rightarrow$} texto plano
+    \item solo quien posea la clave privada puede firmar
+    \item cualquiera que posea la clave pública puede comprobar
+\end{itemize}
+\end{frame}
 
 
-- se crea una clave de sesión aleatoria
-- se emplea la clave pública del destinatario para cifrar asimétricamente la clave de sesión
-- se emplea la clave de sesión para cifrar simétricamente el contenido
-- podemos cifrar para múltiples claves
+\section{Redes de confianza}
+\begin{frame}
+\frametitle{Redes de confianza}
+\begin{itemize}
+    \item firma digital de una clave con otra
+    \item clave pública a autenticar {\tiny ---clave secreta
+        confiante$\rightarrow$} clave pública firmada por confiante
+    \item clave pública firmada por confiante {\tiny ---clave pública
+        confiante$\rightarrow$} clave pública a autenticar
+    \item solo quien posea la clave privada puede depositar confianza
+    \item cualquiera que posea la clave pública puede comprobar confianza
+    \item la confianza puede ser transitiva: red de confianza
+    \item \emph{strong set}: la mayor red interconectada pública de confianza
+\end{itemize}
+\end{frame}
 
+
+\section{Claves maestras y subclaves}
+\begin{frame}
+\frametitle{Claves maestras y subclaves}
+\end{frame}
 
 \iffalse
+practico:
+
+- creando una clave
+- cifrar
+- descifrar
+- firmar
+- comprobar firma
+- confiar
+
+- programas de interes
+- consejos utiles
+
+
 # Cifrando con GPG
 
 ~~~

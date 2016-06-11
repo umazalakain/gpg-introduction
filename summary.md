@@ -10,18 +10,21 @@ Una breve introducción teórica de unos 20-30 minutos, seguida de un taller
 práctico de 60-90 minutos. Es recomendable que toda persona tenga acceso a un
 terminal.
 
-Si es posible, lo ideal sería llevarlo a cabo hacia el principio de los
-encuentros, para que así la gente pueda afianzar los nuevos conceptos y
-herramientas y podamos realizar una keysigning party hacia el final del
-encuentro.
+Si es posible, lo ideal sería llevarlo a cabo hacia el inicio del encuentro,
+para que así la gente pueda afianzar los nuevos conceptos y herramientas y
+podamos realizar una keysigning party hacia el final del encuentro.
 
 Paquetes que sería interesante tener instalados:
 
 - gnupg2
 - gnupg-agent
+- guncat
 - kgpg
 - pass
 - qtpass
+- PassFF (addon para firefox)
 - icedove
 - enigmail
+- claws-mail
+- claws-mail-smime-plugin
 - pius
