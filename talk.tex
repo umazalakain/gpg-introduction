@@ -89,14 +89,40 @@
 \frametitle{Redes de confianza}
 \begin{itemize}
     \item firma digital de una clave con otra
-    \item clave pública a autenticar {\tiny ---clave secreta
-        confiante$\rightarrow$} clave pública firmada por confiante
-    \item clave pública firmada por confiante {\tiny ---clave pública
-        confiante$\rightarrow$} clave pública a autenticar
-    \item solo quien posea la clave privada puede depositar confianza
-    \item cualquiera que posea la clave pública puede comprobar confianza
+    \item certificación de que la clave firmada pertenece a la persona
+        mencionada
     \item la confianza puede ser transitiva: red de confianza
-    \item \emph{strong set}: la mayor red interconectada pública de confianza
+    \item confianza proporcional a la longitud de la cadena de firmas entre dos
+        claves
+    \item confianza proporcional al número de caminos sin escalafones comunes
+        entre dos claves
+    \item \emph{strong set}: la mayor red de confianza interconectada pública
+\end{itemize}
+\end{frame}
+
+
+\subsection{Keysigning Parties}
+\begin{frame}
+\frametitle{Keysingning Parties}
+\begin{itemize}
+    \item antes:
+        \begin{enumerate}
+            \item enviar clave pública propia a la coordinadora
+        \end{enumerate}
+    \item durante:
+        \begin{enumerate}
+            \item verificar información sobre la clave pública propia
+            \item verificar información sobre las claves públicas de las demás
+            \item verificar identidad de las demás
+        \end{enumerate}
+    \item después:
+        \begin{enumerate}
+            \item firmar digitalmente las claves públicas verificadas
+            \item enviar las claves públicas firmadas digitalmente a sus dueñas
+            \item recibir la clave pública propia firmada digitalmente por las demás
+            \item subir la clave pública propia firmada digitalmente por las
+                demás a los servidores
+        \end{enumerate}
 \end{itemize}
 \end{frame}
 
@@ -117,7 +143,7 @@ practico:
 - confiar
 
 - programas de interes
-- consejos utiles
+- consejos utiles (riseup)
 
 
 # Cifrando con GPG
