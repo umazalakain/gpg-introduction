@@ -8,14 +8,20 @@
 
 \usepackage[utf8]{inputenc}
 \usepackage{amsmath}
+\usepackage{listings}
+
+\lstset{basicstyle=\ttfamily}
 
 \let\olditem\item
 \renewcommand{\item}{%
 \olditem\vspace{3pt}}
 
+\setcounter{tocdepth}{1}
+
 \title{GnuPG}
-\subtitle{Introducción}
-\author{Unai Zalakain}
+\subtitle{Una introducción}
+\author{Unai Zalakain\\
+{\tiny \url{http://unaizalakain.info/talks/gpg.pdf}}}
 \date{Jornadas de Tecnología y Cultura Libre,\\ Junio 2016}
 
 
@@ -127,56 +133,180 @@
 \end{frame}
 
 
-\section{Claves maestras y subclaves}
+\section{Subclaves}
 \begin{frame}
-\frametitle{Claves maestras y subclaves}
+\frametitle{Subclaves}
+\begin{itemize}
+    \item clave maestra representa identidad
+    \item firmas digitales, cifrado y autenticación delegadas a subclaves
+    \item subclaves firmadas digitalmente por clave maestra
+    \item clave maestra puede mantenerse separada y segura
+    \item clave maestra solo necesaria para operaciones inusuales:
+        \begin{itemize}
+            \item modificación de claves
+            \item firmas digitales de claves de otras
+            \item generación de certificados de revocación
+        \end{itemize}
+    \item subclaves pueden ser revocadas sin afectar identidad principal
+\end{itemize}
 \end{frame}
 
-\iffalse
-practico:
 
-- creando una clave
-- cifrar
-- descifrar
-- firmar
-- comprobar firma
-- confiar
-
-- programas de interes
-- consejos utiles (riseup)
+\section{Taller práctico}
 
 
-# Cifrando con GPG
-
-~~~
-$ echo "Ping" | gpg2 -a -e -r unai@gisa-elkartea.org
------BEGIN PGP MESSAGE-----
-Version: GnuPG v2
-
-hQEMA72uLbJJfe3kAQf8CuOAetkklBslwARAMGy6k8fAqQlI9il0RhiQsMhr02NJ
-4Rg+7DatRR1IX7rtcUDknc36J0sN+HuMQGEK94xzRnLr/yJaHKc12wHSEOu9vNsN
-kqpGHrhhSiCQPIpCHd7ooJ5oCyuXnMOgbAWKD9GxtxR0ZEV62+/Rl+AUL0bNElLR
-l+znmX5LWG5liZLftPMcjFkHqD1jBqZ9N5d5iOdL5daUDUFWqNqMpg1Mgu8XaB1k
-8Z+1TUkUwQ66KKteerZJtFf0889nO7ZfxpuqDu8XL89D/JmTaxGQIMmq8EEc0/6K
-sj9mPvG1WaSWoN9oYFHes1B9YNI5SNew/iSTgad9kNJAAU0H+qersTJbcTMNOhx2
-HJrHopGHEjN8KGWJ1X5J+lxd2TM02oCitwkgJbl8qpYy6385MzuQIbSWoQh9iBYl
-LA==
-=B5zs
------END PGP MESSAGE-----
-~~~
+\subsection{Creando una clave}
+\begin{frame}[fragile]
+\frametitle{Creando una clave}
+\begin{lstlisting}
+gpg2 --full-gen-key
+\end{lstlisting}
+\begin{enumerate}
+    \item seleccionar \texttt{RSA and RSA}
+    \item seleccionar \texttt{4096} como tamaño
+    \item fijar fecha de expiración
+    \item proteger con una frase de paso fuerte
+    \item certificado de revocación generado automáticamente
+\end{enumerate}
+\end{frame}
 
 
----
+\subsection{Añadiendo una subclave para firmas digitales}
+\begin{frame}[fragile]
+\frametitle{Añadiendo una subclave para firmas digitales}
+\begin{lstlisting}
+gpg2 --edit-key sixto.rodriguez@riseup.net
+
+addkey
+
+save
+\end{lstlisting}
+\begin{enumerate}
+    \item seleccionar \texttt{RSA (sign only)}
+    \item seleccionar \texttt{4096} como tamaño
+    \item fijar fecha de expiración
+\end{enumerate}
+\end{frame}
 
 
-# Descifrando con GPG
+\subsection{Añadiendo una identidad}
+\begin{frame}[fragile]
+\frametitle{Añadiendo una identidad}
+\begin{lstlisting}
+gpg2 --edit-key sixto.rodriguez@riseup.net
 
-~~~
-$ gpg2 -d < file_with_encrypted_message
-gpg: encrypted with 2048-bit RSA key, ID 497DEDE4, created 2016-05-04
-      "Unai Zalakain (GISA) <unai@gisa-elkartea.org>"
-Ping
-~~~
-\fi
+adduid
+
+save
+\end{lstlisting}
+\begin{enumerate}
+    \item seleccionar \texttt{RSA (sign only)}
+    \item seleccionar \texttt{4096} como tamaño
+    \item fijar fecha de expiración
+\end{enumerate}
+\end{frame}
+
+
+\subsection{Creando un certificado de revocación}
+\begin{frame}[fragile]
+\frametitle{Creando un certificado de revocación}
+\begin{lstlisting}
+gpg2 --gen-revoke sixto.rodriguez@riseup.net
+\end{lstlisting}
+\end{frame}
+
+
+\subsection{Guardando una copia de seguridad}
+\begin{frame}[fragile]
+\frametitle{Guardando una copia de seguridad}
+\begin{lstlisting}
+gpg2 --export-secret-keys --armor > secret.gpg
+gpg2 --export-keys --armor > public.gpg
+\end{lstlisting}
+\end{frame}
+
+
+\subsection{Transfiriendo la clave maestra}
+\begin{frame}[fragile]
+\frametitle{Transfiriendo la clave maestra}
+\begin{itemize}
+    \item GPG2 guarda cada clave secreta en un fichero distinto
+    \item pueden obtenerse los nombres de los fichero con:
+\begin{lstlisting}
+gpg2 -K --with-keygrip
+\end{lstlisting}
+    \item los ficheros se encuentran en
+\begin{lstlisting}
+${GNUPGHOME}/private-keys-v1.d/<keygrip>.key
+\end{lstlisting}
+    \item añadir/quitar fichero con clave secreta
+\end{itemize}
+\end{frame}
+
+
+\subsection{Publicando la llave}
+\begin{frame}[fragile]
+\frametitle{Publicando la llave}
+\begin{lstlisting}
+gpg2 --send-keys CCB5CBD
+\end{lstlisting}
+\end{frame}
+
+
+\subsection{Cifrando y descifrando}
+\begin{frame}[fragile]
+\frametitle{Cifrando y descifrando}
+\begin{lstlisting}
+echo "Ping" | \
+gpg2 -e -a -r sixto@rodriguez@riseup.net | \
+gpg2 -d
+\end{lstlisting}
+\end{frame}
+
+
+\subsection{Firmando y comprobando}
+\begin{frame}[fragile]
+\frametitle{Firmando y comprobando}
+\begin{lstlisting}
+echo "Ping" | gpg2 -s -a | gpg2 -v
+\end{lstlisting}
+\end{frame}
+
+
+\subsection{Estableciendo confianza}
+\begin{frame}[fragile]
+\frametitle{Estableciendo confianza}
+egoista firmar claves de las que no estes segura, otra gente puede confiar
+en ti
+diferencia trust y validity
+\begin{lstlisting}
+\end{lstlisting}
+\end{frame}
+
+
+\section{Consejos útiles}
+\begin{frame}
+\frametitle{Consejos útiles}
+programas de interes
+consejos utiles (riseup)
+\end{frame}
+
+
+\section{Keysingning Party}
+\begin{frame}
+\frametitle{Keysingning Party}
+\end{frame}
+
+
+\section{Referencias}
+\begin{frame}
+\frametitle{Referencias}
+https://www.rubin.ch/pgp/kspa/gpg-party.en.html
+https://wiki.debian.org/Subkeys
+https://www.linux.com/learn/pgp-web-trust-core-concepts-behind-trusted-communication
+https://alexcabal.com/creating-the-perfect-gpg-keypair/
+https://www.gnupg.org/gph/en/manual.html
+\end{frame}
+
 
 \end{document}
