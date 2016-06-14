@@ -1,0 +1,38 @@
+This is a revocation certificate for the OpenPGP key:
+
+pub  rsa4032/CCB5CBDE 2016-06-14
+      Key fingerprint = 0BAA 856A 317C D58B 302B  FAAD 8A50 15B1 CCB5 CBDE
+uid                  Sixto Rodriguez <sixto.rodriguez@riseup.net>
+
+A revocation certificate is a kind of "kill switch" to publicly
+declare that a key shall not anymore be used.  It is not possible
+to retract such a revocation certificate once it has been published.
+
+Use it to revoke this key in case of a compromise or loss of
+the secret key.  However, if the secret key is still accessible,
+it is better to generate a new revocation certificate and give
+a reason for the revocation.  For details see the description of
+of the gpg command "--gen-revoke" in the GnuPG manual.
+
+To avoid an accidental use of this file, a colon has been inserted
+before the 5 dashes below.  Remove this colon with a text editor
+before importing and publishing this revocation certificate.
+
+:-----BEGIN PGP PUBLIC KEY BLOCK-----
+Version: GnuPG v2
+Comment: This is a revocation certificate
+
+iQIXBCABCAAJBQJXX/gMAh0AAAoJEIpQFbHMtcveoboPwOzVlrGT6DmbTvPkF25W
+vWgoUmVo7MwhSEyiyV+B1kl6J/C9tqCxoUOCaMpQYb5tnn6uuBKIZVzPXqRbgJBt
+BOO1/gz/l6i7ZGhg6E5lkgRzvwJ2y5a2wNMCJ7KjW+XbAdpTLVFZJZOfTIuHh8/T
+PzcBrKSTtHYJiWlbQomx3BWTgFSJAwmwyqPuY/ilRCyCwFcIcPXEPWZfDtpJiGVk
+96GFBqRglSZs6nd+ax8EuY0SSm9mnOgnBlkKmJG4nAe8+EN9Pty+ARAKYGIv+08T
+U2pD6vun5OXIFsClsOSvcHjGgLq35mlF1wfdOrNZKPjwFRmHqtpwuMA1wB13IJIX
+taL+/o4atAOmxtMpTzhGYwj4pRnBmsMStSr91dOGSd9buIfO6PL2XFuw95UzPHvw
+dg7w9dfJhWY6MSt/sN0xvcUuJzwiEdTWKVsgkRT9Yx8rALIbyPyVG7yoibx8+XYN
+s54cUejdqHZfR2DPs4iCxKe+XIoEKB0oxE58/+UMa+KM6Y2yjAJeFJ9TeuLUEqFb
+FDIVLV/kknLwE/XB0FFQqFs1ZBKvICeEhDBmYe03U/JZtIqDUXLkW45TnMkt8aeo
+vVml1Yet401OlsNbVzOCUYcUx7Op7GhUqXRwgWI2B3WtatofGe6FFkFrkf55tIti
+7tH77kO9nI3WOg==
+=wPez
+-----END PGP PUBLIC KEY BLOCK-----
