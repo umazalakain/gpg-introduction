@@ -23,6 +23,8 @@
 
 \setcounter{tocdepth}{1}
 
+\newcommand{\transformation}[1]{\raisebox{0.3ex}{\tiny{--- #1 $\rightarrow$}}}
+\newcommand{\bitransformation}[1]{\raisebox{0.3ex}{\tiny{$\leftarrow$ #1 $\rightarrow$}}}
 
 \title{GnuPG}
 \subtitle{Una introducción}
@@ -62,7 +64,7 @@
 \subsection{Cifrado simétrico}
 \begin{frame}{Cifrado simétrico}
 \begin{itemize}
-    \item texto plano {\tiny $\leftarrow$clave$\rightarrow$} texto cifrado
+    \item texto plano \bitransformation{clave} texto cifrado
     \item quien puede cifrar, puede descifrar
     \item todas las partes necesitan conocer la clave común
 \end{itemize}
@@ -71,9 +73,9 @@
 \subsection{Cifrado asimétrico}
 \begin{frame}{Cifrado asimétrico}
 \begin{itemize}
-    \item texto plano {\tiny ---clave pública destinatario$\rightarrow$} texto
+    \item texto plano \transformation{clave pública destinatario} texto
         cifrado
-    \item texto cifrado {\tiny ---clave privada destinatario$\rightarrow$} texto
+    \item texto cifrado \transformation{clave privada destinatario} texto
         plano
     \item cualquiera que posea la clave pública puede cifrar
     \item solo quien posea la clave privada puede descifrar
@@ -85,8 +87,8 @@
 \section{Firmas digitales}
 \begin{frame}{Firmas digitales}
 \begin{itemize}
-    \item texto plano {\tiny ---clave privada emisor$\rightarrow$} texto firmado
-    \item texto firmado {\tiny ---clave pública emisor$\rightarrow$} texto plano
+    \item texto plano \transformation{clave privada emisor} texto firmado
+    \item texto firmado \transformation{clave pública emisor} texto plano
     \item solo quien posea la clave privada puede firmar
     \item cualquiera que posea la clave pública puede comprobar
 \end{itemize}
@@ -102,8 +104,8 @@
     \item la confianza puede ser transitiva: red de confianza
     \item \emph{firmar solamente aquellas identidades de las que se esté
         absolutamente segura}
-    \item confianza proporcional a la longitud de la cadena de firmas entre dos
-        claves
+    \item confianza inversamente proporcional a la longitud de la cadena de
+        firmas entre dos claves
     \item confianza proporcional al número de caminos sin escalafones comunes
         entre dos claves
     \item \emph{strong set}: la mayor red de confianza interconectada pública
@@ -112,7 +114,7 @@
 
 
 \subsection{Keysigning Parties}
-\begin{frame}[allowframebreaks]{Keysingning Parties}
+\begin{frame}{Keysingning Parties}
 \begin{itemize}
     \item antes:
         \begin{enumerate}
