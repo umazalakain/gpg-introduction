@@ -5,19 +5,23 @@
 \setbeamercolor{title}{fg=UniGray}
 \setbeamercolor{frametitle}{fg=UniGray}
 \setbeamercolor{structure}{fg=UniGray}
+\setbeamertemplate{bibliography item}[triangle]
 
 \usepackage[utf8]{inputenc}
 \usepackage{amsmath}
 \usepackage{listings}
 \usepackage{graphics}
+\usepackage{pgfpages}
+\usepackage[backend=bibtex, hyperref=true]{biblatex}
+\makeatletter
+\def\blx@maxline{77}
+\makeatother
+\addbibresource{talk.bib}
 
-\lstset{basicstyle=\ttfamily}
-
-\let\olditem\item
-\renewcommand{\item}{%
-\olditem\vspace{3pt}}
+\lstset{basicstyle=\fontsize{9}{13}\selectfont\ttfamily}
 
 \setcounter{tocdepth}{1}
+
 
 \title{GnuPG}
 \subtitle{Una introducción}
@@ -32,15 +36,13 @@
 
 \frame{\titlepage}
 
-\begin{frame}
-\frametitle{Índice}
+\begin{frame}{Índice}
 \tableofcontents
 \end{frame}
 
 
 \section{Qué es}
-\begin{frame}
-\frametitle{Qué es}
+\begin{frame}{Qué es}
 \begin{itemize}
     \item software criptográfico
     \item software libre
@@ -57,8 +59,7 @@
 
 \section{Tipos de cifrado}
 \subsection{Cifrado simétrico}
-\begin{frame}
-\frametitle{Cifrado simétrico}
+\begin{frame}{Cifrado simétrico}
 \begin{itemize}
     \item texto plano {\tiny $\leftarrow$clave$\rightarrow$} texto cifrado
     \item quien puede cifrar, puede descifrar
@@ -67,8 +68,7 @@
 \end{frame}
 
 \subsection{Cifrado asimétrico}
-\begin{frame}
-\frametitle{Cifrado asimétrico}
+\begin{frame}{Cifrado asimétrico}
 \begin{itemize}
     \item texto plano {\tiny ---clave pública destinatario$\rightarrow$} texto
         cifrado
@@ -82,8 +82,7 @@
 
 
 \section{Firmas digitales}
-\begin{frame}
-\frametitle{Firmas digitales}
+\begin{frame}{Firmas digitales}
 \begin{itemize}
     \item texto plano {\tiny ---clave privada emisor$\rightarrow$} texto firmado
     \item texto firmado {\tiny ---clave pública emisor$\rightarrow$} texto plano
@@ -94,13 +93,14 @@
 
 
 \section{Redes de confianza}
-\begin{frame}
-\frametitle{Redes de confianza}
+\begin{frame}{Redes de confianza}
 \begin{itemize}
     \item firma digital de una clave con otra
     \item certificación de que la clave firmada pertenece a la persona
         mencionada
     \item la confianza puede ser transitiva: red de confianza
+    \item \emph{firmar solamente aquellas identidades de las que se esté
+        absolutamente segura}
     \item confianza proporcional a la longitud de la cadena de firmas entre dos
         claves
     \item confianza proporcional al número de caminos sin escalafones comunes
@@ -111,8 +111,7 @@
 
 
 \subsection{Keysigning Parties}
-\begin{frame}
-\frametitle{Keysingning Parties}
+\begin{frame}[allowframebreaks]{Keysingning Parties}
 \begin{itemize}
     \item antes:
         \begin{enumerate}
@@ -137,8 +136,7 @@
 
 
 \section{Subclaves}
-\begin{frame}
-\frametitle{Subclaves}
+\begin{frame}{Subclaves}
 \begin{itemize}
     \item clave maestra representa identidad
     \item firmas digitales, cifrado y autenticación delegadas a subclaves
@@ -159,8 +157,7 @@
 
 
 \subsection{Creando una clave}
-\begin{frame}[fragile]
-\frametitle{Creando una clave}
+\begin{frame}[fragile]{Creando una clave}
 \begin{lstlisting}
 gpg2 --full-gen-key
 \end{lstlisting}
@@ -175,8 +172,7 @@ gpg2 --full-gen-key
 
 
 \subsection{Añadiendo una subclave para firmas digitales}
-\begin{frame}[fragile]
-\frametitle{Añadiendo una subclave para firmas digitales}
+\begin{frame}[fragile]{Añadiendo una subclave para firmas digitales}
 \begin{lstlisting}
 gpg2 --edit-key sixto.rodriguez@riseup.net
 
@@ -193,8 +189,7 @@ save
 
 
 \subsection{Añadiendo una identidad}
-\begin{frame}[fragile]
-\frametitle{Añadiendo una identidad}
+\begin{frame}[fragile]{Añadiendo una identidad}
 \begin{lstlisting}
 gpg2 --edit-key sixto.rodriguez@riseup.net
 
@@ -210,9 +205,22 @@ save
 \end{frame}
 
 
+\subsection{Listando claves}
+\begin{frame}[fragile]{Listando claves}
+\begin{itemize}
+    \item públicas
+        \begin{lstlisting}
+gpg2 -k
+        \end{lstlisting}
+    \item privadas
+        \begin{lstlisting}
+gpg2 -K
+        \end{lstlisting}
+\end{itemize}
+\end{frame}
+
 \subsection{Creando un certificado de revocación}
-\begin{frame}[fragile]
-\frametitle{Creando un certificado de revocación}
+\begin{frame}[fragile]{Creando un certificado de revocación}
 \begin{lstlisting}
 gpg2 --gen-revoke sixto.rodriguez@riseup.net
 \end{lstlisting}
@@ -220,8 +228,7 @@ gpg2 --gen-revoke sixto.rodriguez@riseup.net
 
 
 \subsection{Guardando una copia de seguridad}
-\begin{frame}[fragile]
-\frametitle{Guardando una copia de seguridad}
+\begin{frame}[fragile]{Guardando una copia de seguridad}
 \begin{lstlisting}
 gpg2 --export-secret-keys --armor > secret.gpg
 gpg2 --export-keys --armor > public.gpg
@@ -230,35 +237,24 @@ gpg2 --export-keys --armor > public.gpg
 
 
 \subsection{Transfiriendo la clave maestra}
-\begin{frame}[fragile]
-\frametitle{Transfiriendo la clave maestra}
+\begin{frame}[fragile]{Transfiriendo la clave maestra}
 \begin{itemize}
     \item GPG2 guarda cada clave secreta en un fichero distinto
     \item pueden obtenerse los nombres de los fichero con:
-\begin{lstlisting}
+        \begin{lstlisting}
 gpg2 -K --with-keygrip
-\end{lstlisting}
+        \end{lstlisting}
     \item los ficheros se encuentran en
-\begin{lstlisting}
+        \begin{lstlisting}
 ${GNUPGHOME}/private-keys-v1.d/<keygrip>.key
-\end{lstlisting}
+        \end{lstlisting}
     \item añadir/quitar fichero con clave secreta
 \end{itemize}
 \end{frame}
 
 
-\subsection{Publicando la llave}
-\begin{frame}[fragile]
-\frametitle{Publicando la llave}
-\begin{lstlisting}
-gpg2 --send-keys CCB5CBD
-\end{lstlisting}
-\end{frame}
-
-
 \subsection{Cifrando y descifrando}
-\begin{frame}[fragile]
-\frametitle{Cifrando y descifrando}
+\begin{frame}[fragile]{Cifrando y descifrando}
 \begin{lstlisting}
 echo "Ping" | \
 gpg2 -e -a -r sixto@rodriguez@riseup.net | \
@@ -268,48 +264,93 @@ gpg2 -d
 
 
 \subsection{Firmando y comprobando}
-\begin{frame}[fragile]
-\frametitle{Firmando y comprobando}
+\begin{frame}[fragile]{Firmando y comprobando}
 \begin{lstlisting}
 echo "Ping" | gpg2 -s -a | gpg2 -v
 \end{lstlisting}
 \end{frame}
 
 
-\subsection{Estableciendo confianza}
-\begin{frame}[fragile]
-\frametitle{Estableciendo confianza}
-egoista firmar claves de las que no estes segura, otra gente puede confiar
-en ti
-diferencia trust y validity
+\subsection{Servidores de claves}
+\begin{frame}[fragile]{Servidores de claves}
 \begin{lstlisting}
+echo "keyserver hkps://hkps.pool.sks-keyservers.net" >> \
+    ${GNUPGHOME}/gpg.conf
+gpg2 --send-keys 0BAA856A317CD58B302BFAAD8A5015B1CCB5CBDE
+gpg2 --search-key unai@gisa-elkartea.org
+gpg2 --recv-keys 4B3F515D76ADA88FA8B5247BF1DB723A779DD1F7
+\end{lstlisting}
+\end{frame}
+
+
+\subsection{Verificando una clave}
+\begin{frame}[fragile]{Verificando una clave}
+\begin{lstlisting}
+gpg2 --sign-key unai@gisa-elkartea.org
+gpg2 -a --export unai@gisa-elkartea.org > signed.key
+# Enviar signed.key al correo mencionado en la clave
 \end{lstlisting}
 \end{frame}
 
 
 \section{Consejos útiles}
-\begin{frame}
-\frametitle{Consejos útiles}
-programas de interes
-consejos utiles (riseup)
+\begin{frame}[allowframebreaks]{Consejos útiles}
+\begin{itemize}
+    \item firmar públicamente solamente aquellas claves a las que no nos importe
+        estar públicamente relacionadas
+    \item mantener la clave maestra privada separada y segura
+    \item comunicarse con los servidores de claves sobre HKPS (HKP sobre TLS)
+    \item comunicarse con un pool de servidores
+    \item evitar descargar una clave de un servidor especificado por dicha clave
+        \framebreak
+    \item asegurarse del fingerprint de las claves descargadas
+    \item generar certificados de revocación
+    \item especificar fecha de expiración
+    \item especificar preferencias de algoritmos de cifrado fuertes
+    \item enviar claves firmadas por correo a su dueño en vez de subirlas a los
+        servidores
+\end{itemize}
+\end{frame}
+
+
+\section{Software de interés}
+\begin{frame}[allowframebreaks]{Software de interés}
+\begin{description}
+    \item[gnupg2] más completo y con una mejor interfaz
+    \item[gnupg-agent] gestor de claves privadas
+    \item[gnupg-curl] soporte para HKPS
+    \item[guncat] descifra texto parcialmente cifrado
+    \item[pius] firma y envía por correo un grupo de claves
+    \item[kgpg] GUI para GPG
+        \framebreak
+    \item[pass] gestor de contraseñas cifradas con GPG
+    \item[qtpass] GUI para pass
+    \item[PassFF] rellenado de formularios en Firefox a través de pass
+        \framebreak
+    \item[icedove] cliente de correo
+    \item[enigmail] addon para cifrado con GPG para icedove
+    \item[claws-mail] cliente de correo
+    \item[claws-mail-smime-plugin] addon para cifrado con GPG para claws-mail
+\end{description}
 \end{frame}
 
 
 \section{Keysingning Party}
-\begin{frame}
-\frametitle{Keysingning Party}
+\begin{frame}[fragile]{Keysingning Party}
+Reforcemos la red de confianza!
+\begin{enumerate}
+    \item exportar la clave pública
+        \begin{lstlisting}
+gpg2 -a --export > public.key
+        \end{lstlisting}
+    \item subir la clave pública a \url{http://biglumber.com/x/web?keyring=891}
+    \item acudir a la keysigning party
+\end{enumerate}
 \end{frame}
 
 
-\section{Referencias}
-\begin{frame}
-\frametitle{Referencias}
-https://www.rubin.ch/pgp/kspa/gpg-party.en.html
-https://wiki.debian.org/Subkeys
-https://www.linux.com/learn/pgp-web-trust-core-concepts-behind-trusted-communication
-https://alexcabal.com/creating-the-perfect-gpg-keypair/
-https://www.gnupg.org/gph/en/manual.html
+\begin{frame}[allowframebreaks]{Referencias}
+    \nocite{*}
+    \printbibliography
 \end{frame}
-
-
 \end{document}

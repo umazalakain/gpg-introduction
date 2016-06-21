@@ -7,3 +7,12 @@
 *.toc
 *.vrb
 .*.swp
+*-blx.bib
+*.aux.bbl
+*.aux.blg
+*.bbl
+*.blg
+*.run.xml
+*.tex.bbl
+*.tex.blg
+

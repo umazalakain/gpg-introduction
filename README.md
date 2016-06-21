@@ -5,8 +5,14 @@ Esta charla forma parte de las [Jornadas de Tecnología y Cultura
 Libre](http://libreeko.libremanuals.net/) que tiene lugar en el [ESLA EKO de
 Carabanchel](https://eslaeko.net/) los días 24, 25 y 26 de Junio.
 
-Para compilar la presentación a PDF hace falta tener `make` y `texlive`
-instalados y ejecutar `make`.
+Para compilar la presentación a PDF hace falta tener `make`, `texlive`,
+`textlive-latex-extra` y `texlive-generic-extra` instalados y ejecutar `make`.
+
+El directorio `gnupg` contiene las claves y la configuración de algunos de los
+ejemplos mencionados en la presentación. Para establecer dicho directorio como
+fuente para `gpg2` basta con ejecutar `export
+GNUPGHOME=/ubicacion/del/directorio/gnupg` en la misma shell en donde se van a
+ejecutar los comandos de `gpg2`.
 
 # Descripción
 
@@ -25,6 +31,7 @@ Paquetes que sería interesante tener instalados:
 
 - gnupg2
 - gnupg-agent
+- gnupg-curl
 - guncat
 - kgpg
 - pass
