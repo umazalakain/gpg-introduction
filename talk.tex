@@ -233,6 +233,7 @@ gpg2 --gen-revoke sixto.rodriguez@riseup.net
 \subsection{Guardando una copia de seguridad}
 \begin{frame}[fragile]{Guardando una copia de seguridad}
 \begin{lstlisting}
+umask 077
 gpg2 --export-secret-keys --armor > secret.gpg
 gpg2 --export-keys --armor > public.gpg
 \end{lstlisting}
