@@ -339,8 +339,14 @@ gpg2 -a --export unai@gisa-elkartea.org > signed.key
 \end{frame}
 
 
-\section{Keysigning Party}
-\begin{frame}[fragile]{Keysigning Party}
+\begin{frame}[allowframebreaks]{Referencias}
+    \nocite{*}
+    \printbibliography
+\end{frame}
+
+
+\section{Cierre}
+\begin{frame}[fragile]
 Reforcemos la red de confianza!
 \begin{enumerate}
     \item exportar la clave pública
@@ -350,11 +356,15 @@ gpg2 -a --export > public.key
     \item subir la clave pública a \url{http://biglumber.com/x/web?keyring=891}
     \item acudir a la keysigning party
 \end{enumerate}
+
+\hfill\\
+
+Esta presentación se puede encontrar en:
+\begin{center}
+    \includegraphics[height=.2\textheight]{qrlink}\\
+    \url{http://unaizalakain.info/talks/gpg.pdf}
+\end{center}
 \end{frame}
 
 
-\begin{frame}[allowframebreaks]{Referencias}
-    \nocite{*}
-    \printbibliography
-\end{frame}
 \end{document}
