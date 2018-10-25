@@ -28,8 +28,8 @@
 
 \title{GnuPG}
 \subtitle{Una introducción}
-\author{Unai Zalakain\\
-{\tiny \url{http://unaizalakain.info/talks/gpg.pdf}}\\
+\author{Uma Zalakain\\
+{\tiny \url{https://umazalakain.info/talks/gpg.pdf}}\\
 \includegraphics[height=.2\textheight]{qrlink}
 }
 \date{Jornadas de Tecnología y Cultura Libre,\\ Junio 2016}
@@ -281,7 +281,7 @@ echo "Ping" | gpg2 -s -a | gpg2 -v
 echo "keyserver hkps://hkps.pool.sks-keyservers.net" >> \
     ${GNUPGHOME}/gpg.conf
 gpg2 --send-keys 0BAA856A317CD58B302BFAAD8A5015B1CCB5CBDE
-gpg2 --search-key unai@gisa-elkartea.org
+gpg2 --search-key uma@gisa-elkartea.org
 gpg2 --recv-keys 4B3F515D76ADA88FA8B5247BF1DB723A779DD1F7
 \end{lstlisting}
 \end{frame}
@@ -290,8 +290,8 @@ gpg2 --recv-keys 4B3F515D76ADA88FA8B5247BF1DB723A779DD1F7
 \subsection{Verificando una clave}
 \begin{frame}[fragile]{Verificando una clave}
 \begin{lstlisting}
-gpg2 --sign-key unai@gisa-elkartea.org
-gpg2 -a --export unai@gisa-elkartea.org > signed.key
+gpg2 --sign-key uma@gisa-elkartea.org
+gpg2 -a --export uma@gisa-elkartea.org > signed.key
 # Enviar signed.key al correo mencionado en la clave
 \end{lstlisting}
 \end{frame}
@@ -362,7 +362,7 @@ gpg2 -a --export > public.key
 Esta presentación se puede encontrar en:
 \begin{center}
     \includegraphics[height=.2\textheight]{qrlink}\\
-    \url{http://unaizalakain.info/talks/gpg.pdf}
+    \url{https://umazalakain.info/talks/gpg.pdf}
 \end{center}
 \end{frame}
 
